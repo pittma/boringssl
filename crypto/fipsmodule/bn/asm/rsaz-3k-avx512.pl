@@ -65,6 +65,8 @@ open OUT,"| \"$^X\" \"$xlate\" $flavour \"$output\""
     or die "can't call $xlate: $!";
 *STDOUT=*OUT;
 
+$avx512ifma=1;
+
 if ($avx512ifma>0) {{{
 @_6_args_universal_ABI = ("%rdi","%rsi","%rdx","%rcx","%r8","%r9");
 

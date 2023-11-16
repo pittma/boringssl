@@ -39,6 +39,26 @@ void RSAZ_1024_mod_exp_avx2(BN_ULONG result[16], const BN_ULONG base_norm[16],
                             BN_ULONG k0,
                             BN_ULONG storage_words[MOD_EXP_CTIME_STORAGE_LEN]);
 
+int ossl_rsaz_avx512ifma_eligible(void);
+
+#if !defined(MY_ASSEMBLER_IS_TOO_OLD_FOR_512AVX)
+#define RSAZ_512_ENABLED
+
+int ossl_rsaz_mod_exp_avx512_x2(BN_ULONG *res1,
+                                const BN_ULONG *base1,
+                                const BN_ULONG *exponent1,
+                                const BN_ULONG *m1,
+                                const BN_ULONG *RR1,
+                                BN_ULONG k0_1,
+                                BN_ULONG *res2,
+                                const BN_ULONG *base2,
+                                const BN_ULONG *exponent2,
+                                const BN_ULONG *m2,
+                                const BN_ULONG *RR2,
+                                BN_ULONG k0_2,
+                                int factor_size);
+#endif // !MY_ASSEMBLER_IS_TOO_OLD_FOR_512AVX
+
 OPENSSL_INLINE int rsaz_avx2_capable(void) {
   return CRYPTO_is_AVX2_capable();
 }
